@@ -1,0 +1,7 @@
+weechat scripts
+
+These synced to the upstream repository at:
+
+  http://git.savannah.gnu.org/gitweb/?p=weechat/scripts.git
+
+With some local additions and modifications.
