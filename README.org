@@ -5,3 +5,21 @@ These synced to the upstream repository at:
   http://git.savannah.gnu.org/gitweb/?p=weechat/scripts.git
 
 With some local additions and modifications.
+
+* urlbar
+
+Reverse the numbering in the displayed URLs in the urlbar.  Add a =load= command:
+
+#+BEGIN_EXAMPLE
+/urlbar load [n]
+#+END_EXAMPLE
+
+This loads the n^th URL.  If no number is given then the most recent
+URL is loaded.  A suggestion is to alias it:
+
+#+BEGIN_EXAMPLE
+/alias ul /urlbar load
+#+END_EXAMPLE
+
+then a quick =/ul= will load the just posted URL.
+
