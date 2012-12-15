@@ -198,9 +198,7 @@ def urlbar_load_url(cmd, nth = 1):
     '''Load nth URL in browser'''
     global urls
     nth = int(nth)
-    visible_amount = int(weechat.config_get_plugin('visible_amount'))
-    ntot = min(len(urls), visible_amount)
-    if nth < 1 or nth > ntot:
+    if nth < 1 or nth > len(urls):
         return
     url = urls[-nth]
     url_loader = weechat.config_get_plugin('url_sender_cmd') % url.url
