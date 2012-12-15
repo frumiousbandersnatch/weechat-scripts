@@ -62,6 +62,8 @@ settings = {
     "show_buffername"       : 'on',    # Show buffer name in list
     "show_index"            : 'on',    # Show url index in list
     "time_format"           : '%H:%M', # Time format
+                                       # How to sent a URL to a browser
+    "url_sender_cmd"        : 'sensible-browser %s', 
 }
 
 import_ok = True
@@ -108,11 +110,12 @@ def urlbar_item_cb(data, item, window):
         printlist = urls[-visible_amount:]
 
     result = ''
+    ntoprint = len(printlist)
     for index, url in enumerate(printlist):
         if weechat.config_get_plugin('show_index') == 'on':
-            index = index+1
+            number = ntoprint - index
             result += '%s%2d%s %s \r' %\
-                (weechat.color("yellow"), index, weechat.color("bar_fg"), url)
+                (weechat.color("yellow"), number, weechat.color("bar_fg"), url)
         else:
             result += '%s%s \r' %(weechat.color('bar_fg'), url)
     return result
@@ -191,6 +194,21 @@ def urlbar_print_cb(data, buffer, time, tags, displayed, highlight, prefix, mess
     return weechat.WEECHAT_RC_OK
 
 
+def urlbar_load_url(cmd, nth = 1):
+    '''Load nth URL in browser'''
+    global urls
+    nth = int(nth)
+    visible_amount = int(weechat.config_get_plugin('visible_amount'))
+    ntot = min(len(urls), visible_amount)
+    if nth < 1 or nth > ntot:
+        return
+    url = urls[-nth]
+    url_loader = weechat.config_get_plugin('url_sender_cmd') % url.url
+
+    from subprocess import Popen, PIPE
+    Popen(url_loader.split(), stdout=PIPE, stderr=PIPE).communicate()
+    return
+
 def urlbar_cmd(data, buffer, args):
     """ Callback for /url command. """
     global urls, DISPLAY_ALL
@@ -210,6 +228,8 @@ def urlbar_cmd(data, buffer, args):
         weechat.command("", "/bar toggle urlbar")
     elif args == 'clear':
         urls = []
+    elif args.startswith('load'):
+        urlbar_load_url(*args.split())
     else:
         weechat.command("", "/help %s" % SCRIPT_COMMAND)
 
@@ -243,11 +263,12 @@ if __name__ == "__main__" and import_ok:
 
         weechat.hook_command(SCRIPT_COMMAND,
                              "URL bar control",
-                             "[list | hide | show | toggle | URL]",
+                             "[list | hide | show | toggle | load [n] | URL]",
                              "   list: list all URL and show URL bar\n"
                              "   hide: hide URL bar\n"
                              "   show: show URL bar\n"
-                             "   toggle: toggle showing of URL bar\n",
+                             "   toggle: toggle showing of URL bar\n"
+                             "   load [n]: load nth URL or most recent in browser\n",
                              "list %(urlbar_urls)",
                              "urlbar_cmd", "")
         weechat.hook_completion("urlbar_urls", "list of URLs",
