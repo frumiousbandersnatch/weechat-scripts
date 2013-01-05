@@ -6,7 +6,24 @@ These synced to the upstream repository at:
 
 With some local additions and modifications.
 
-* urlbar
+* New scripts
+
+** bee
+
+This script provides spelling suggestions.  It requires [[http://packages.python.org/pyenchant/][PyEnchant]].
+
+To use it bind the =/bee= command to a key.  Eg via:
+
+#+BEGIN_EXAMPLE
+/key bind alt-g /bee 
+#+END_EXAMPLE
+
+Then when this key is hit a bar will be shown with spelling
+suggestions for the word under the cursor.
+
+* Modified scripts
+
+** urlbar
 
 Reverse the numbering in the displayed URLs in the urlbar.  Add a =load= command:
 
@@ -23,3 +40,4 @@ URL is loaded.  A suggestion is to alias it:
 
 then a quick =/ul= will load the just posted URL.
 
+Make the format for the urlbar be configurable with the =show_format= option.
