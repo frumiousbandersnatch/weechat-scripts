@@ -46,7 +46,7 @@
 
 SCRIPT_NAME    = "urlbar"
 SCRIPT_AUTHOR  = "FlashCode <flashcode@flashtux.org>"
-SCRIPT_VERSION = "10"
+SCRIPT_VERSION = "10+frumious"
 SCRIPT_LICENSE = "GPL3"
 SCRIPT_DESC    = "Bar with URLs. For easy clicking or selecting."
 SCRIPT_COMMAND = "urlbar"
@@ -61,6 +61,7 @@ settings = {
     "show_nick"             : 'on',    # Show nick in list
     "show_buffername"       : 'on',    # Show buffer name in list
     "show_index"            : 'on',    # Show url index in list
+    "show_format"           : "",      # Full format, other show_* ignored
     "time_format"           : '%H:%M', # Time format
                                        # How to sent a URL to a browser
     "url_sender_cmd"        : 'sensible-browser %s', 
@@ -109,16 +110,16 @@ def urlbar_item_cb(data, item, window):
     else:
         printlist = urls[-visible_amount:]
 
-    result = ''
+    result = []
     ntoprint = len(printlist)
     for index, url in enumerate(printlist):
         if weechat.config_get_plugin('show_index') == 'on':
             number = ntoprint - index
-            result += '%s%2d%s %s \r' %\
-                (weechat.color("yellow"), number, weechat.color("bar_fg"), url)
+            result.append('%s%2d%s %s ' %\
+                (weechat.color("yellow"), number, weechat.color("bar_fg"), url))
         else:
-            result += '%s%s \r' %(weechat.color('bar_fg'), url)
-    return result
+            result.append('%s%s ' %(weechat.color('bar_fg'), url))
+    return '\r'.join(result)
 
 
 def get_buffer_name(bufferp, long=False):
@@ -145,6 +146,10 @@ class URL(object):
 
     def __str__(self):
         # Format options
+        sform = weechat.config_get_plugin('show_format')
+        if sform:
+            return sform % self.__dict__
+
         time, buffername, nick = '', '', ''
         if weechat.config_get_plugin('show_timestamp') == 'on':
             time = self.time + ' '
