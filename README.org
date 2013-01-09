@@ -40,4 +40,11 @@ URL is loaded.  A suggestion is to alias it:
 
 then a quick =/ul= will load the just posted URL.
 
-Make the format for the urlbar be configurable with the =show_format= option.
+Make the format for the urlbar be configurable with the =show_format=
+option.  Python interpolation using information about the collected
+URL can be used.  For example:
+
+#+BEGIN_EXAMPLE
+/set plugins.var.python.urlbar.show_format "%(time)s %(buffername)16s %(nick)16s %(url)s"
+/save
+#+END_EXAMPLE
