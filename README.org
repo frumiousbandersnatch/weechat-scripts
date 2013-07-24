@@ -8,6 +8,20 @@ With some local additions and modifications.
 
 * New scripts
 
+** emote
+
+This script provides a buffer of emoji and a mechanism to insert them by name into the buffer.
+
+For example, 
+
+#+BEGIN_EXAMPLE
+/key bind meta-e /emote list
+M-e smile ENTER
+:)
+#+END_EXAMPLE
+
+Then when you hit =M-e= you will be taken to the "emote" buffer where you can see the available emoji.  Type the name of the one you want and hit =ENTER= and it will be inserted into the input on the original buffer.  
+
 ** bee
 
 This script provides spelling suggestions.  It requires [[http://packages.python.org/pyenchant/][PyEnchant]].
