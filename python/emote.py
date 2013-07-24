@@ -64,6 +64,17 @@ bag = dict({
     "faceemo":"(///_ಥ)",
     "blowkiss":"(づ￣ ³￣)づ・゜゜・。。・゜゜❤",
     "facebear":"ʕ •ᴥ•ʔ",
+    "want":"ლ(╹◡╹ლ)",
+    "throwstars":"*･゜ﾟ･*\(^O^)/*･゜ﾟ･*☆",
+    "inlove":"(✿ ♥‿♥)",
+    "manchest":"ლ(́◉◞౪◟◉‵ლ)",
+    "catch":"(／_^)／ 　　　　　　●　＼(^_＼)",
+    "therethere":"(ｏ・_・)ノ”(ノ_＜。)",
+    "kick":"ヽ(#ﾟДﾟ)ﾉ┌┛",
+    "stache":"(￣┏Д┓￣°*)",
+    "smug":"（￣へ￣）",
+    "worried":"⊙﹏⊙",
+
 })
 emoji = OrderedDict(sorted(bag.items()))
 
